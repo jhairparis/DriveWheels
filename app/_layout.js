@@ -1,16 +1,11 @@
-import React from "react";
 import { BottomNavigation } from "react-native-paper";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import HomeScreen from "../screens/HomeScreen";
-import LoginScreen from "../screens/LoginScreen";
-import RegisterScreen from "../screens/RegisterScreen";
+import { Tabs } from "expo-router";
+import Touchable from "../components/Touchable";
 
-const Tab = createBottomTabNavigator();
-
-const TabNavigator = () => {
+export default function Layout() {
   return (
-    <Tab.Navigator
+    <Tabs
       screenOptions={{
         headerShown: false,
       }}
@@ -18,6 +13,15 @@ const TabNavigator = () => {
         <BottomNavigation.Bar
           navigationState={state}
           safeAreaInsets={insets}
+          renderTouchable={(props) => {
+            if (
+              props.route.name === "_sitemap" ||
+              props.route.name === "[...404]"
+            ) {
+              return null;
+            }
+            return <Touchable {...props} />;
+          }}
           onTabPress={({ route, preventDefault }) => {
             const event = navigation.emit({
               type: "tabPress",
@@ -56,9 +60,8 @@ const TabNavigator = () => {
         />
       )}
     >
-      <Tab.Screen
-        name="Home"
-        component={HomeScreen}
+      <Tabs.Screen
+        name="index"
         options={{
           tabBarLabel: "Home",
           tabBarIcon: ({ color, size }) => {
@@ -66,9 +69,8 @@ const TabNavigator = () => {
           },
         }}
       />
-      <Tab.Screen
-        name="Login"
-        component={LoginScreen}
+      <Tabs.Screen
+        name="(auth)/login/index"
         options={{
           tabBarLabel: "Login",
           tabBarIcon: ({ color, size }) => {
@@ -76,9 +78,8 @@ const TabNavigator = () => {
           },
         }}
       />
-      <Tab.Screen
-        name="Register"
-        component={RegisterScreen}
+      <Tabs.Screen
+        name="(auth)/register/index"
         options={{
           tabBarLabel: "Register",
           tabBarIcon: ({ color, size }) => {
@@ -86,8 +87,6 @@ const TabNavigator = () => {
           },
         }}
       />
-    </Tab.Navigator>
+    </Tabs>
   );
-};
-
-export default TabNavigator;
+}
