@@ -22,13 +22,22 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#9A82DB"
-      }
+      },
+      "package": "com.illustriousloop.DriveWheels"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "expo-router"
-    ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "d6b96a80-95fb-4b44-9468-424721eae263"
+      }
+    }
   }
 }
