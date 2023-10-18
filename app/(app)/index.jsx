@@ -1,10 +1,12 @@
 import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { Searchbar, Text, useTheme } from "react-native-paper";
-import CardCar from "./CardCar";
+import CustomView from "@/components/CustomView";
+import ItemCar from "@/components/ui/cards/ItemCar";
 import { Image } from "react-native";
-import Logo from "../assets/icon_.png";
-import LogoDark from "../assets/icon.png";
+import Logo from "@/assets/icon_.png";
+import LogoDark from "@/assets/icon.png";
+import { useSession } from "@/components/providers/SessionProvider";
 
 const fakeData = [
   {
@@ -66,33 +68,40 @@ const fakeData = [
 
 const Home = () => {
   const { dark } = useTheme();
+  const { signOut } = useSession();
 
   return (
-    <View style={styles.container}>
-      <View style={styles.searchBarContainer}>
-        <Image
-          style={styles.searchBarImg}
-          source={dark ? LogoDark : Logo}
-          contentFit="contain"
-          contentPosition="bottom"
-        />
-        <Searchbar placeholder="Mazda 5" style={styles.searchBar} />
-      </View>
-      <Text variant="titleMedium" style={styles.title}>
-        Destecados
-      </Text>
-      <ScrollView>
-        {fakeData.map((car, i) => (
-          <CardCar
-            key={i}
-            nameCar={car.nameCar}
-            nameCompany={car.nameCompany}
-            brand={car.brand}
-            image={car.image}
+    <CustomView>
+      <View style={styles.container}>
+        <View style={styles.searchBarContainer}>
+          <Image
+            style={styles.searchBarImg}
+            source={dark ? LogoDark : Logo}
+            contentFit="contain"
+            contentPosition="bottom"
           />
-        ))}
-      </ScrollView>
-    </View>
+          <Searchbar placeholder="Mazda 5" style={styles.searchBar} />
+        </View>
+        <Text
+          variant="titleMedium"
+          style={styles.title}
+          onPress={() => signOut()}
+        >
+          Destecados
+        </Text>
+        <ScrollView>
+          {fakeData.map((car, i) => (
+            <ItemCar
+              key={i}
+              nameCar={car.nameCar}
+              nameCompany={car.nameCompany}
+              brand={car.brand}
+              image={car.image}
+            />
+          ))}
+        </ScrollView>
+      </View>
+    </CustomView>
   );
 };
 
@@ -107,7 +116,7 @@ const styles = StyleSheet.create({
   searchBarImg: {
     width: 51,
     height: 51,
-	marginRight: 10,
+    marginRight: 10,
   },
   searchBar: {
     flex: 1,

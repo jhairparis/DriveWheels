@@ -4,10 +4,9 @@ import { Link } from "expo-router";
 import { StyleSheet, View, ScrollView } from "react-native";
 import { router } from "expo-router";
 import { Image } from "expo-image";
-import Logo from "../../../assets/icon_.png";
-import LogoDark from "../../../assets/icon.png";
-
-import CustomView from "../../../components/CustomView";
+import Logo from "@/assets/icon_.png";
+import LogoDark from "@/assets/icon.png";
+import CustomView from "@/components/CustomView";
 
 const initialState = {
   name: "",

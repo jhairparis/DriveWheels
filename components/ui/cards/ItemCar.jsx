@@ -3,7 +3,7 @@ import { View, Image } from "react-native";
 import { Card, Avatar } from "react-native-paper";
 import { useTheme } from "react-native-paper";
 
-const CardCar = ({ nameCar, brand, nameCompany, image }) => {
+const ItemCar = ({ nameCar, brand, nameCompany, image }) => {
   const { colors } = useTheme();
 
   const getInitials = (name) => {
@@ -43,4 +43,4 @@ const CardCar = ({ nameCar, brand, nameCompany, image }) => {
   );
 };
 
-export default CardCar;
+export default ItemCar;

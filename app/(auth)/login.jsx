@@ -1,25 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import { TextInput, Text, Button, useTheme } from "react-native-paper";
 import { Link } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import { router } from "expo-router";
 import { Image } from "expo-image";
-import Logo from "../../../assets/icon_.png";
-import LogoDark from "../../../assets/icon.png";
-
-import CustomView from "../../../components/CustomView";
+import Logo from "@/assets/icon_.png";
+import LogoDark from "@/assets/icon.png";
+import CustomView from "@/components/CustomView";
+import { useSession } from "@/components/providers/SessionProvider";
 
 const initialState = {
   email: "",
   password: "",
   showPassword: false,
 };
+
 const LoginScreen = () => {
   const { dark } = useTheme();
-  const [FormData, setFormData] = React.useState(initialState);
+  const { signIn } = useSession();
+  const [FormData, setFormData] = useState(initialState);
 
   const handlerChange = (type, value) => {
     setFormData({ ...FormData, [type]: value });
+  };
+
+  const submit = async () => {
+    await signIn(FormData.email.trim(), FormData.password.trim());
+    router.replace("/");
   };
 
   return (
@@ -70,7 +77,7 @@ const LoginScreen = () => {
               No tienes cuenta?
             </Text>
           </Link>
-          <Button mode="elevated" onPress={() => router.replace("/")}>
+          <Button mode="elevated" onPress={submit}>
             Ingresar
           </Button>
         </View>
