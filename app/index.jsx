@@ -1,10 +1,9 @@
 import React, { useCallback } from "react";
-import { Button, Text } from "react-native-paper";
-import { router } from "expo-router";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import PacificoFont from "../assets/fonts/Pacifico-Regular.ttf";
 import CustomView from "../components/CustomView";
+import Home from "../components/Home";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -25,10 +24,7 @@ const HomeScreen = () => {
 
   return (
     <CustomView onLayout={onLayoutRootView}>
-      <Text variant="displayLarge">Home</Text>
-      <Button mode="elevated" onPress={() => router.push("/login")}>
-        Login
-      </Button>
+      <Home />
     </CustomView>
   );
 };
