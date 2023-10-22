@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { TextInput, Text, Button, useTheme } from "react-native-paper";
+import {
+  TextInput,
+  Text,
+  Button,
+  useTheme,
+  Snackbar,
+} from "react-native-paper";
 import { Link } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import { router } from "expo-router";
@@ -19,14 +25,22 @@ const LoginScreen = () => {
   const { dark } = useTheme();
   const { signIn } = useSession();
   const [FormData, setFormData] = useState(initialState);
+  const [visible, setVisible] = useState(false);
+
+  const onToggleSnackBar = () => setVisible(!visible);
+  const onDismissSnackBar = () => setVisible(false);
 
   const handlerChange = (type, value) => {
     setFormData({ ...FormData, [type]: value });
   };
 
   const submit = async () => {
-    await signIn(FormData.email.trim(), FormData.password.trim());
-    router.replace("/");
+    try {
+      await signIn(FormData.email.trim(), FormData.password.trim());
+      router.replace("/");
+    } catch (error) {
+      onToggleSnackBar();
+    }
   };
 
   return (
@@ -82,6 +96,15 @@ const LoginScreen = () => {
           </Button>
         </View>
       </View>
+      <Snackbar
+        visible={visible}
+        onDismiss={onDismissSnackBar}
+        action={{
+          label: "Listo",
+        }}
+      >
+        No se pudo iniciar sesión
+      </Snackbar>
     </CustomView>
   );
 };
